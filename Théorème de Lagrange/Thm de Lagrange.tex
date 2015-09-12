@@ -1,0 +1,91 @@
+\documentclass[]{article}
+\usepackage[utf8]{inputenc}
+\usepackage{amsthm}
+\usepackage{amsfonts}
+
+\newtheorem{mydef}{Définition}
+\newtheorem{mythm}{Théorème}
+\newtheorem{mycoro}{Corollaire}
+
+\newcounter{ppc}
+\newcounter{pspc}
+\newcounter{psspc}
+
+\newcommand{\proofpart}[1]{
+	\bigskip
+	\\
+	\setcounter{pspc}{1}
+	\underline{\textbf{\Roman{ppc}-#1}}
+	\stepcounter{ppc}
+}
+
+\newcommand{\proofsubpart}[1]{
+	\medskip
+	\\
+	\setcounter{psspc}{1}
+	\arabic{pspc}{)} \underline{#1}
+	\stepcounter{pspc}
+}
+
+\newcommand{\proofsubsubpart}[1]{
+	\\
+	\textit{\alph{psspc}{)} \underline{#1}}
+	\stepcounter{psspc}
+}
+
+\newenvironment{myproof}[1]{
+	\noindent
+	\textit{Preuve}
+	\ifx&#1&
+	\else
+		: #1
+	\fi
+	\\
+	\setcounter{ppc}{1}
+}
+
+\begin{document}
+
+\begin{myproof}{Théorème de Lagrange}
+	Soit $G$ un groupe, et $H$ un sous-groupe de $G$.\\
+	\indent On va démontrer que $\#H \mid \#G$ en créant une partition de $G$, dont chaque partie aura le même cardinal que $H$.
+	\proofpart{Relation d'équivalence $\sim$ sur $G$}
+	\proofsubpart{Définition de la relation}
+	\\
+	Soit $\sim$ la relation telle que : $\forall x, y\in G,~x \sim y \Leftrightarrow x^{-1}y \in H \Leftrightarrow \exists h \in H : xh=y$
+	\proofsubsubpart{$\sim $ est réflexive :}\\
+	$x \sim x, x \in G$ car $x^{-1}x=e \in H$
+	\proofsubsubpart{$\sim $ est symétrique :}\\
+	$x \sim y \Leftrightarrow x^{-1}y \in H \Leftrightarrow (x^{-1}y)^{-1}=y^{-1}x \in H \Leftrightarrow y \sim x$
+	\proofsubsubpart{$\sim $ est transitive :}\\
+	$
+	\left.
+	\begin{array}{cc}
+		x \sim y \Leftrightarrow x^{-1}y \in H \\
+		x \sim z \Leftrightarrow x^{-1}z \in H
+	\end{array}
+	\right\}
+	\Rightarrow (x^{-1}y)(y^{-1}z)=x^{-1}y \in H \Leftrightarrow x\sim z
+	$
+	\proofsubpart{Classes d'équivalence}\\
+	Soit $x \in G$.\\
+	\indent $xH$ est la classe d'équivalence égale à $\{y \in G | x \sim y\}$, on peut ainsi partitionner $G$ en un ensemble de classes d'équivalence $(x_iH)_{i \in I}$, on à donc :\\
+	$\displaystyle G = \coprod_{i \in I}x_iH$ d'où l'égalité $\displaystyle \#G=\sum_{i \in I}\#(x_iH)$
+	\\
+	\underline{N.B. :} L'ensemble des classes que l'on vient de définir se note $G/H$.
+	\proofsubpart{Equipotence entre $H$ et $xH$}
+	Soit $x \in G$.\\
+	$xH = \{y \in G | x \sim y\} = \{y \in G | \exists h \in H : y = xh\}$. On a donc l'application 
+	$\varphi :
+	\begin{array}{cc}
+		H \to xH \\
+		h \mapsto xh
+	\end{array}$ qui est bijective.
+	\proofsubsubpart{Surjectivité :} $xH = \{xh | h \in H\} = \varphi(H)$
+	\proofsubsubpart{Injectivité :} $h, h' \in H : \varphi(h)=\varphi(h') \Rightarrow xh=xh' \Rightarrow h=h'$ en multipliant par $x^{-1}$ à gauche.\\
+	Ainsi, $\varphi$ est bijective, on en déduit $\#H=\#(xH)$
+	\proofpart{Divisibilité}
+	\\
+	\indent On reprend l'égalité $\displaystyle \#G=\sum_{i \in I}\#(x_iH)$, on sait à présent que pour tout $x$ de $G$ on a $\#H=\#(xH)$, donc on a bien $\#H|\#G$.
+\end{myproof}
+\end{document}
